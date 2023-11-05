@@ -22,4 +22,17 @@ function startQuiz(){
     displayQuestion();
 }
 
+// Function to start the timer
+function startTimer(){
+    timerInterval = setInterval(function (){
+        timeLeft--;
+        document.getElementById('time').textContent = timeLeft;
+
+        if(timeLeft <= 0){
+            endQuiz();
+        }
+
+    },1000);
+}
+
 
