@@ -12,6 +12,7 @@ const startScreen = document.getElementById('start-screen');
 const questionsScreen = document.getElementById('questions');
 const endScreen = document.getElementById('end-screen');
 const finalScoreElement = document.getElementById('final-score');
+const initialsInput = document.getElementById("initials");
 const feedbackElement = document.getElementById('feedback');
 
 // function to start the quiz
@@ -35,4 +36,21 @@ function startTimer(){
     },1000);
 }
 
+
+// function to display a question 
+function displayQuestion(){
+    const currentQuestion = questions[currentQuestionIndex];
+    const questionTitle = document.getElementById('question-title');
+    const choicesElement = document.getElementById('choices');
+
+    questionTitle.textContent = currentQuestion.question;
+    choicesElement.innerHTML = '';
+
+    currentQuestion.choices.forEach((choice) => {
+        const choiceButton = document.createElement('button');
+        choiceButton.textContent = choice;
+        choiceButton.addEventListener('click', () => checkAnswer(choice));
+        choicesElement.appendChild(choiceButton);
+    });
+}
 
