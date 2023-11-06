@@ -88,7 +88,7 @@ function endQuiz() {
 // this function will handle score submission
 function submitScore() {
   const initials = document.getElementById("initials").value;
-  // check if the initals are not empty
+  // check if the initials are not empty
   if (initials.trim() !== "") {
     // retrieves the existing scores or creates an empty array
     const scores = JSON.parse(localStorage.getItem("scores")) || [];
