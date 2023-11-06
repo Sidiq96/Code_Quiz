@@ -1,5 +1,6 @@
 // Event Listeners
 document.getElementById("start").addEventListener("click", startQuiz);
+document.getElementById('submit').addEventListener('click', submitScore);
 // quiz variables
 let currentQuestionIndex = 0;
 let timeLeft = 60;
@@ -56,15 +57,18 @@ function checkAnswer(selectedChoice) {
   const currentQuestion = questions[currentQuestionIndex];
   if (selectedChoice === currentQuestion.correctAnswer) {
     displayFeedback("Correct!");
+    correctSoundEffect();
     score += 10;
     // this will increase the score if the question is answered correctly
   } else {
     displayFeedback("Wrong");
+    incorrectSoundEffect();
     // this will deduct time for an incorrect answer
     timeLeft -= 10;
   }
-  currentQuestionIndex++;
   //   this is used to keep track of the current question which displayed to the user. it also helps keep track of which question to display to the user, and when you increment it, it effectively points to the next question in the array.
+  currentQuestionIndex++;
+  // this if statement checks to see if they are any more questions
   if (currentQuestionIndex < questions.length) {
     displayQuestion();
   } else {
@@ -81,6 +85,11 @@ function endQuiz() {
   endScreen.classList.remove("hide");
   finalScoreElement.textContent = score;
 }
+// this function will handle score submission
+function submitScore(){
+  const initials = document.getElementById('initials').value;
+  console.log(submitScore);
+}
 
 // this function is to display the feedback so they user will know of they answered correctly or not
 function displayFeedback(message) {
@@ -91,4 +100,15 @@ function displayFeedback(message) {
   setTimeout(function () {
     feedbackElement.classList.add("hide");
   }, 1000);
+}
+
+// this function is for playing the sound effect when the user answers the question correctly
+function correctSoundEffect() {
+  const Audio = document.getElementById('correct-sound');
+  Audio.play();
+}
+// this function is for playing the sound effect when the user answers the question incorrectly
+function incorrectSoundEffect (){
+  const Audio1 = document.getElementById('incorrect-sound');
+  Audio1.play();
 }
