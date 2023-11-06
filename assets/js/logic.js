@@ -26,11 +26,12 @@ function startQuiz() {
 // Function to start the timer
 function startTimer() {
   timerInterval = setInterval(function () {
-    timeLeft--;
-    document.getElementById("time").textContent = timeLeft;
-
-    if (timeLeft <= 0) {
-      endQuiz();
+    if (timeLeft > 0) {
+        timeLeft--;
+        document.getElementById("time").textContent = timeLeft;
+    }else{
+        endQuiz(); 
+        // time has reached zero, so this will the end the quiz
     }
   }, 1000);
 }
@@ -55,6 +56,7 @@ function displayQuestion() {
 // this function to check the user's answer
 function checkAnswer(selectedChoice) {
   const currentQuestion = questions[currentQuestionIndex];
+  const correctSound = new Audio("")
   if (selectedChoice === currentQuestion.correctAnswer) {
     feedbackElement.textContent = "Correct! ";
     score += 10;
