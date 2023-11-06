@@ -12,8 +12,6 @@ const startScreen = document.getElementById("start-screen");
 const questionsScreen = document.getElementById("questions");
 const endScreen = document.getElementById("end-screen");
 const finalScoreElement = document.getElementById("final-score");
-const initialsInput = document.getElementById("initials");
-const feedbackElement = document.getElementById("feedback");
 
 // function to start the quiz
 function startQuiz() {
@@ -27,11 +25,11 @@ function startQuiz() {
 function startTimer() {
   timerInterval = setInterval(function () {
     if (timeLeft > 0) {
-        timeLeft--;
-        document.getElementById("time").textContent = timeLeft;
-    }else{
-        endQuiz(); 
-        // time has reached zero, so this will the end the quiz
+      timeLeft--;
+      document.getElementById("time").textContent = timeLeft;
+    } else {
+      endQuiz();
+      // time has reached zero, so this will the end the quiz
     }
   }, 1000);
 }
@@ -56,29 +54,41 @@ function displayQuestion() {
 // this function to check the user's answer
 function checkAnswer(selectedChoice) {
   const currentQuestion = questions[currentQuestionIndex];
-  const correctSound = new Audio("")
   if (selectedChoice === currentQuestion.correctAnswer) {
-    feedbackElement.textContent = "Correct! ";
+    displayFeedback("Correct!");
     score += 10;
     // this will increase the score if the question is answered correctly
   } else {
-    feedbackElement.textContent = "Wrong -10 seconds";
+    displayFeedback("Wrong");
     // this will deduct time for an incorrect answer
     timeLeft -= 10;
   }
   currentQuestionIndex++;
+  //   this is used to keep track of the current question which displayed to the user. it also helps keep track of which question to display to the user, and when you increment it, it effectively points to the next question in the array.
   if (currentQuestionIndex < questions.length) {
     displayQuestion();
   } else {
     endQuiz();
   }
 }
-// this function will allow the user to move on to the next question
 
 // this function will end the quiz
 function endQuiz() {
   clearInterval(timerInterval);
+  //   this will hide the question screen once the quiz has been ended
   questionsScreen.classList.add("hide");
+  //   this will hide the end screen when the last question which was answered
   endScreen.classList.remove("hide");
   finalScoreElement.textContent = score;
+}
+
+// this function is to display the feedback so they user will know of they answered correctly or not
+function displayFeedback(message) {
+  const feedbackElement = document.getElementById("feedback");
+  feedbackElement.textContent = message;
+  feedbackElement.classList.remove("hide");
+  // adds a timeout which will hide the feedback after one second
+  setTimeout(function () {
+    feedbackElement.classList.add("hide");
+  }, 1000);
 }
